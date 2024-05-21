@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use crate::priority_queue::Queue;
+use crate::{encoding::Encoding, priority_queue::Queue};
 
 // In Huffman coding node with lowest probability is given highest priority.
 const INVERSE_WEIGHT: usize = usize::MAX;
@@ -16,6 +16,33 @@ pub(crate) enum Node {
 }
 
 impl Node {
+    pub(super) fn encode(&self, text: &str) -> Vec<u8> {
+        let mut res = Vec::new();
+        let mut acc = Encoding::new();
+
+        for symbol in text.chars() {
+            if let Some(overflow) = acc.absorb(Encoding::symbol(self, symbol)) {
+                res.push(overflow);
+            }
+        }
+
+        if let Some(incomplete) = acc.destruct() {
+            res.push(incomplete);
+        }
+        res
+    }
+
+    pub(crate) fn contains(&self, symbol: char) -> bool {
+        match self {
+            Node::Branch {
+                tip,
+                left: _,
+                right: _,
+            } => tip.contains(&symbol),
+            Node::Leaf(value) => symbol == *value,
+        }
+    }
+
     fn cloned(&self) -> Vec<char> {
         match self {
             Node::Branch {
