@@ -1,11 +1,11 @@
-use tree::Node;
+use encoding::text::encode_text;
 
 mod encoding;
 mod priority_queue;
 mod tree;
 
 pub fn encode(text: &str) -> Vec<u8> {
-    Node::from(text).encode(text)
+    encode_text(&text.into(), text)
 }
 
 #[cfg(test)]
