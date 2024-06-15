@@ -10,9 +10,9 @@ impl Symbol {
         Self { body: 0, size: 0 }
     }
 
-    pub(super) fn destruct(self) -> Option<u8> {
+    pub(super) fn destruct(self) -> Option<(u8, usize)> {
         if self.size > 0 {
-            Some(self.body)
+            Some((self.body, self.size))
         } else {
             None
         }
