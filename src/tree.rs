@@ -6,7 +6,7 @@ use crate::priority_queue::Queue;
 const INVERSE_WEIGHT: usize = usize::MAX;
 
 #[derive(Debug, PartialEq)]
-pub(crate) enum Node {
+pub enum Node {
     Branch {
         tip: Vec<char>,
         left: Box<Node>,
