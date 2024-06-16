@@ -8,7 +8,7 @@ https://en.wikipedia.org/wiki/Huffman_coding
 
 ## API
 
-## Overview
+### Overview
 
 ```rust
 use huffman::{encode, decode};
